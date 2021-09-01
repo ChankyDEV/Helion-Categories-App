@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:helion/models/category.dart';
+import 'package:helion/models/category_dto.dart';
 import 'package:helion/models/category_exception.dart';
 import 'package:helion/models/failures.dart';
 import 'package:helion/repositories/categories/categories_repository.dart';
@@ -27,12 +27,12 @@ void main() {
     );
   });
 
-  final tCategories = <Category>[
-    Category(0, 'Promocja', '32052', <Category>[
-      Category(319, 'Militaria. Technika wojskowa', '215', <Category>[])
+  final tCategories = <CategoryDTO>[
+    CategoryDTO(0, 'Promocja', '68297', <CategoryDTO>[
+      CategoryDTO(319, 'Militaria. Technika wojskowa', '215', <CategoryDTO>[])
     ]),
-    Category(39, 'Edukcja', '2259', <Category>[
-      Category(114, 'Chemia', '167', <Category>[]),
+    CategoryDTO(39, 'Edukcja', '2259', <CategoryDTO>[
+      CategoryDTO(114, 'Chemia', '167', <CategoryDTO>[]),
     ])
   ];
   final errMessage = 'Error occured while getting categories';

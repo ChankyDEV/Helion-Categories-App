@@ -14,5 +14,10 @@ class Category extends Equatable {
   );
 
   @override
-  List<Object?> get props => [id, name, booksAmount, subcategories];
+  List<Object?> get props => [
+        this.id,
+        this.name,
+        this.booksAmount,
+        this.subcategories,
+      ];
 }

@@ -1,0 +1,17 @@
+{
+  "name": "Promocja",
+  "id": 0,
+  "books": "68297",
+  "children": [
+    {
+      "name": "Militaria. Technika wojskowa",
+      "id": 319,
+      "books": "215"
+    },
+    {
+      "name": "Instalacje elektryczne",
+      "id": 305,
+      "books": "32"
+    }
+  ]
+}

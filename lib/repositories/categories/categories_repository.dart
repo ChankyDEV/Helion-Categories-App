@@ -1,5 +1,5 @@
-import 'package:helion/models/category.dart';
+import 'package:helion/models/category_dto.dart';
 
 abstract class CategoriesRepository {
-  Future<List<Category>> getAllCategories();
+  Future<List<CategoryDTO>> getAllCategories();
 }
