@@ -2,16 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:helion/models/category.dart';
 import 'package:helion/models/category_exception.dart';
 import 'package:helion/models/failures.dart';
-import 'package:helion/repositories/categories/categories_repository.dart';
-import 'package:helion/services/categories/categories_service.dart';
+import 'package:helion/repositories/category/category_repository.dart';
+import 'package:helion/services/category/category_service.dart';
 import 'package:helion/services/network/network_connection_service.dart';
 import 'package:helion/utils/consts.dart';
 
-class CategoriesServiceImpl implements CategoriesService {
-  final CategoriesRepository _repository;
+class CategoryServiceImpl implements CategoryService {
+  final CategoryRepository _repository;
   final NetworkConnectionService _networkConnectionService;
 
-  CategoriesServiceImpl(
+  CategoryServiceImpl(
     this._repository,
     this._networkConnectionService,
   );

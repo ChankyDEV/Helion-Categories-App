@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:helion/models/category_dto.dart';
 import 'package:helion/models/category_exception.dart';
 import 'package:helion/models/failures.dart';
-import 'package:helion/repositories/categories/categories_repository.dart';
-import 'package:helion/services/categories/categories_service.dart';
-import 'package:helion/services/categories/categories_service_impl.dart';
+import 'package:helion/repositories/category/category_repository.dart';
+import 'package:helion/services/category/category_service.dart';
+import 'package:helion/services/category/category_service_impl.dart';
 import 'package:helion/services/network/network_connection_service.dart';
 import 'package:helion/utils/consts.dart';
 import 'package:mockito/mockito.dart';
@@ -14,14 +14,14 @@ import '../../utils/mock_category_repository.dart';
 import '../../utils/mock_network_connection_service.dart';
 
 void main() {
-  late final CategoriesRepository repository;
-  late final CategoriesService categoriesService;
+  late final CategoryRepository repository;
+  late final CategoryService categoriesService;
   late final NetworkConnectionService networkConnectionService;
 
   setUpAll(() {
     repository = MockCategoryRepository();
     networkConnectionService = MockNetworkConnectionService();
-    categoriesService = CategoriesServiceImpl(
+    categoriesService = CategoryServiceImpl(
       repository,
       networkConnectionService,
     );
@@ -35,9 +35,9 @@ void main() {
       CategoryDTO(114, 'Chemia', '167', <CategoryDTO>[]),
     ])
   ];
-  final errMessage = 'Error occured while getting categories';
+  final errMessage = 'Error occured while getting category';
 
-  test('should return all categories if getting them went successfully',
+  test('should return all category if getting them went successfully',
       () async {
     when(repository.getAllCategories()).thenAnswer(
       (_) async => tCategories,
@@ -50,7 +50,7 @@ void main() {
     );
   });
 
-  test('should return failure if getting categories went unsuccessfully',
+  test('should return failure if getting category went unsuccessfully',
       () async {
     when(repository.getAllCategories()).thenThrow(
       CategoryException(errMessage),
@@ -64,7 +64,7 @@ void main() {
     );
   });
 
-  test('should return all categories if there is internet connection',
+  test('should return all category if there is internet connection',
       () async {
     when(networkConnectionService.isConnected).thenAnswer(
       (_) async => true,

@@ -1,5 +1,5 @@
 import 'package:helion/models/category_dto.dart';
 
-abstract class CategoriesRepository {
+abstract class CategoryRepository {
   Future<List<CategoryDTO>> getAllCategories();
 }
