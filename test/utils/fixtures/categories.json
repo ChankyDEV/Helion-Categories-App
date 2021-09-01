@@ -1,0 +1,33 @@
+{
+  "categories": [
+    {
+      "name": "Promocja",
+      "id": 0,
+      "books": "65135"
+    },
+    {
+      "name": "Technika i mechanika",
+      "children": [
+        {
+          "name": "Militaria. Technika wojskowa",
+          "id": 319,
+          "books": "215"
+        }
+      ],
+      "id": 285,
+      "books": 933
+    },
+    {
+      "name": "Edukacja",
+      "children": [
+        {
+          "name": "Szkoły zawodowe i technika",
+          "id": 243,
+          "books": "15"
+        }
+      ],
+      "id": 39,
+      "books": 2259
+    }
+  ]
+}

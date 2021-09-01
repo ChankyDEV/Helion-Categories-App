@@ -35,7 +35,7 @@ void main() {
       'should convert json to categoryDTO if category dont have sub category',
       () {
     final Map<String, dynamic> jsonMap = json.decode(
-      fixture('categoriesWithoutSubcategory.json'),
+      fixture('categoryWithoutSubcategory.json'),
     );
 
     final category = CategoryDTO.fromJson(jsonMap);
