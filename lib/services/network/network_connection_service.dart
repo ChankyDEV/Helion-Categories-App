@@ -1,1 +1,3 @@
-abstract class NetworkConnectionService {}
+abstract class NetworkConnectionService {
+  Future<bool> get isConnected;
+}

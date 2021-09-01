@@ -5,4 +5,7 @@ class NetworkConnectionServiceImpl implements NetworkConnectionService {
   final InternetConnectionChecker _internetConnectionChecker;
 
   NetworkConnectionServiceImpl(this._internetConnectionChecker);
+
+  @override
+  Future<bool> get isConnected => _internetConnectionChecker.hasConnection;
 }
