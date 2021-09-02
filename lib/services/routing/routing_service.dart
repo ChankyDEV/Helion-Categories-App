@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:helion/blocs/category/category_bloc.dart';
 import 'package:helion/screens/screens.dart';
 
 class Screens {
@@ -16,10 +19,11 @@ class RoutingService {
   }
 
   MaterialPageRoute<Categories> categories() {
+    final categoryBloc = GetIt.I.get<CategoryBloc>();
     return MaterialPageRoute(
-      builder: (context) {
-        return Categories();
-      },
-    );
+        builder: (context) => BlocProvider(
+              create: (context) => categoryBloc,
+              child: Categories(),
+            ));
   }
 }
