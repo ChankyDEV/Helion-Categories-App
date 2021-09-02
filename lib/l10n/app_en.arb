@@ -1,0 +1,30 @@
+{
+    "title" : "Helion Recruitment App",
+    "@title": {
+        "description": "Title of the app"
+    },
+    "categoriesHeader": "Available categories",
+    "@categoriesHeader": {
+          "description": "Header of categories screen"
+        },
+    "categoryNameLabel": "Category",
+    "@categoryNameLabel": {
+              "description": "Label above category name"
+            },
+    "categoryIDLabel": "Identifier",
+    "@categoryIDLabel": {
+                  "description": "Label above category ID"
+                },
+    "categoryBooksAmountLabel": "Number of books",
+    "@categoryBooksAmountLabel": {
+                      "description": "Label above number of category books"
+                    },
+    "categoryWithoutSubcategoriesLabel": "No subcategories",
+    "@categoryWithoutSubcategoriesLabel": {
+                          "description": "Label under category in list to determine if category has subcategories"
+                        },
+    "noInternetConnectionLabel": "You do not have internet connection",
+    "@noInternetConnectionLabel": {
+                              "description": "Label that is shown when user has not inernet connection"
+                            }
+}
