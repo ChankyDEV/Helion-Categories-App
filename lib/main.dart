@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:helion/screens/screens.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Helion Recruitment App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Categories(),
     );
-  }
-}
-
-class Categories extends StatelessWidget {
-  const Categories({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
 

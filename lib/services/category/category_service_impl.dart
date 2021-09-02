@@ -4,12 +4,12 @@ import 'package:helion/models/category_exception.dart';
 import 'package:helion/models/failures.dart';
 import 'package:helion/repositories/category/category_repository.dart';
 import 'package:helion/services/category/category_service.dart';
-import 'package:helion/services/network/network_connection_service.dart';
+import 'package:helion/core/network/network_connection_service.dart';
 import 'package:helion/utils/consts.dart';
 
 class CategoryServiceImpl implements CategoryService {
   final CategoryRepository _repository;
-  final NetworkConnectionService _networkConnectionService;
+  final NetworkConnectionChecker _networkConnectionService;
 
   CategoryServiceImpl(
     this._repository,

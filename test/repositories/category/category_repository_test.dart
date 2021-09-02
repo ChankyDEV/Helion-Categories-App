@@ -78,7 +78,7 @@ void main() {
     );
   });
 
-  test('should throw category exception if status code is different than 200', () async {
+  test('should throw categories exception if status code is different than 200', () async {
     when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
           (_) async => http.Response('', 400, headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
