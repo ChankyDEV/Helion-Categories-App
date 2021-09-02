@@ -12,10 +12,14 @@ class CategoryDTO extends Category {
     return CategoryDTO(
       jsonMap['id'],
       jsonMap['name'],
-      jsonMap['books'],
+      _booksAmountFromJson(jsonMap['books']),
       _convertChildren(jsonMap['children']),
     );
   }
+}
+
+String _booksAmountFromJson(dynamic booksAmount) {
+  return booksAmount.toString();
 }
 
 List<CategoryDTO> _convertChildren(List<dynamic>? children) {

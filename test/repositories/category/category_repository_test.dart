@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:helion/models/category_dto.dart';
+import 'package:helion/models/category_exception.dart';
 import 'package:helion/repositories/category/category_repository.dart';
 import 'package:helion/repositories/category/category_repository_impl.dart';
+import 'package:helion/utils/consts.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
@@ -41,6 +43,11 @@ void main() {
   });
 
   test('should perform a call to particular url', () async {
+    when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
+          (_) async => http.Response(fixture('categories.json'), 200, headers: {
+        HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      }),
+    );
     await repository.getAllCategories();
     verify(
       client.get(
@@ -70,4 +77,19 @@ void main() {
       tCategories,
     );
   });
+
+  test('should throw category exception if status code is different than 200', () async {
+    when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
+          (_) async => http.Response('', 400, headers: {
+        HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      }),
+    );
+    final call = repository.getAllCategories;
+
+    expect(
+      () => call(),
+      throwsA(CategoryException(WRONG_STATUS_CODE)),
+    );
+  });
+  
 }
