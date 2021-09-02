@@ -9,15 +9,17 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<CategoryBloc, CategoryState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return state.isLoading
-              ? _showLoadingIndicator()
-              : state.hasInternetConnection
-                  ? _showCategories(state)
-                  : _showNoInternetConnection();
-        },
+      body: SafeArea(
+        child: BlocConsumer<CategoryBloc, CategoryState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return state.isLoading
+                ? _showLoadingIndicator()
+                : state.hasInternetConnection
+                    ? _showCategories(state)
+                    : _showNoInternetConnection();
+          },
+        ),
       ),
     );
   }
@@ -52,8 +54,29 @@ class Categories extends StatelessWidget {
   Widget _buildCategoryTile(Category category) {
     return Card(
       child: ExpansionTile(
+        trailing: category.hasSubcategories
+            ? Icon(Icons.arrow_drop_down)
+            : const SizedBox(),
+        textColor: Colors.black,
+        iconColor: Colors.black,
         title: Text(category.name),
+        children: [...listSubcategories(category.subcategories)],
       ),
     );
+  }
+
+  List<Widget> listSubcategories(List<Category> subcategories) {
+    final subcategoriesTiles = <Widget>[];
+    subcategories.forEach((subcategory) {
+      subcategoriesTiles.add(
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            title: Text(subcategory.name),
+          ),
+        ),
+      );
+    });
+    return subcategoriesTiles;
   }
 }

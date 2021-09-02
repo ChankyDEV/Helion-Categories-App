@@ -20,4 +20,6 @@ class Category extends Equatable {
         this.booksAmount,
         this.subcategories,
       ];
+
+  bool get hasSubcategories => subcategories.length > 0;
 }
