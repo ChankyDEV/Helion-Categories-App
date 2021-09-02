@@ -7,5 +7,6 @@ class CategoryState with _$CategoryState {
     required bool isLoading,
     required bool hasInternetConnection,
     required bool hasError,
+    required bool isRetryButtonClicked,
   }) = Initial;
 }

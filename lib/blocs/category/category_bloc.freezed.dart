@@ -25,6 +25,10 @@ class _$CategoryEventTearOff {
       status,
     );
   }
+
+  RetryButtonClicked retryButtonClicked() {
+    return const RetryButtonClicked();
+  }
 }
 
 /// @nodoc
@@ -36,12 +40,14 @@ mixin _$CategoryEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() reloadCategories,
     required TResult Function(ConnectionStatus status) networkStatusChanged,
+    required TResult Function() retryButtonClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? reloadCategories,
     TResult Function(ConnectionStatus status)? networkStatusChanged,
+    TResult Function()? retryButtonClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,12 +55,14 @@ mixin _$CategoryEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ReloadCategories value) reloadCategories,
     required TResult Function(NetworkStatusChanged value) networkStatusChanged,
+    required TResult Function(RetryButtonClicked value) retryButtonClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReloadCategories value)? reloadCategories,
     TResult Function(NetworkStatusChanged value)? networkStatusChanged,
+    TResult Function(RetryButtonClicked value)? retryButtonClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,6 +127,7 @@ class _$ReloadCategories implements ReloadCategories {
   TResult when<TResult extends Object?>({
     required TResult Function() reloadCategories,
     required TResult Function(ConnectionStatus status) networkStatusChanged,
+    required TResult Function() retryButtonClicked,
   }) {
     return reloadCategories();
   }
@@ -128,6 +137,7 @@ class _$ReloadCategories implements ReloadCategories {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? reloadCategories,
     TResult Function(ConnectionStatus status)? networkStatusChanged,
+    TResult Function()? retryButtonClicked,
     required TResult orElse(),
   }) {
     if (reloadCategories != null) {
@@ -141,6 +151,7 @@ class _$ReloadCategories implements ReloadCategories {
   TResult map<TResult extends Object?>({
     required TResult Function(ReloadCategories value) reloadCategories,
     required TResult Function(NetworkStatusChanged value) networkStatusChanged,
+    required TResult Function(RetryButtonClicked value) retryButtonClicked,
   }) {
     return reloadCategories(this);
   }
@@ -150,6 +161,7 @@ class _$ReloadCategories implements ReloadCategories {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReloadCategories value)? reloadCategories,
     TResult Function(NetworkStatusChanged value)? networkStatusChanged,
+    TResult Function(RetryButtonClicked value)? retryButtonClicked,
     required TResult orElse(),
   }) {
     if (reloadCategories != null) {
@@ -231,6 +243,7 @@ class _$NetworkStatusChanged implements NetworkStatusChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() reloadCategories,
     required TResult Function(ConnectionStatus status) networkStatusChanged,
+    required TResult Function() retryButtonClicked,
   }) {
     return networkStatusChanged(status);
   }
@@ -240,6 +253,7 @@ class _$NetworkStatusChanged implements NetworkStatusChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? reloadCategories,
     TResult Function(ConnectionStatus status)? networkStatusChanged,
+    TResult Function()? retryButtonClicked,
     required TResult orElse(),
   }) {
     if (networkStatusChanged != null) {
@@ -253,6 +267,7 @@ class _$NetworkStatusChanged implements NetworkStatusChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(ReloadCategories value) reloadCategories,
     required TResult Function(NetworkStatusChanged value) networkStatusChanged,
+    required TResult Function(RetryButtonClicked value) retryButtonClicked,
   }) {
     return networkStatusChanged(this);
   }
@@ -262,6 +277,7 @@ class _$NetworkStatusChanged implements NetworkStatusChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReloadCategories value)? reloadCategories,
     TResult Function(NetworkStatusChanged value)? networkStatusChanged,
+    TResult Function(RetryButtonClicked value)? retryButtonClicked,
     required TResult orElse(),
   }) {
     if (networkStatusChanged != null) {
@@ -282,6 +298,96 @@ abstract class NetworkStatusChanged implements CategoryEvent {
 }
 
 /// @nodoc
+abstract class $RetryButtonClickedCopyWith<$Res> {
+  factory $RetryButtonClickedCopyWith(
+          RetryButtonClicked value, $Res Function(RetryButtonClicked) then) =
+      _$RetryButtonClickedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$RetryButtonClickedCopyWithImpl<$Res>
+    extends _$CategoryEventCopyWithImpl<$Res>
+    implements $RetryButtonClickedCopyWith<$Res> {
+  _$RetryButtonClickedCopyWithImpl(
+      RetryButtonClicked _value, $Res Function(RetryButtonClicked) _then)
+      : super(_value, (v) => _then(v as RetryButtonClicked));
+
+  @override
+  RetryButtonClicked get _value => super._value as RetryButtonClicked;
+}
+
+/// @nodoc
+
+class _$RetryButtonClicked implements RetryButtonClicked {
+  const _$RetryButtonClicked();
+
+  @override
+  String toString() {
+    return 'CategoryEvent.retryButtonClicked()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is RetryButtonClicked);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() reloadCategories,
+    required TResult Function(ConnectionStatus status) networkStatusChanged,
+    required TResult Function() retryButtonClicked,
+  }) {
+    return retryButtonClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? reloadCategories,
+    TResult Function(ConnectionStatus status)? networkStatusChanged,
+    TResult Function()? retryButtonClicked,
+    required TResult orElse(),
+  }) {
+    if (retryButtonClicked != null) {
+      return retryButtonClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReloadCategories value) reloadCategories,
+    required TResult Function(NetworkStatusChanged value) networkStatusChanged,
+    required TResult Function(RetryButtonClicked value) retryButtonClicked,
+  }) {
+    return retryButtonClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReloadCategories value)? reloadCategories,
+    TResult Function(NetworkStatusChanged value)? networkStatusChanged,
+    TResult Function(RetryButtonClicked value)? retryButtonClicked,
+    required TResult orElse(),
+  }) {
+    if (retryButtonClicked != null) {
+      return retryButtonClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RetryButtonClicked implements CategoryEvent {
+  const factory RetryButtonClicked() = _$RetryButtonClicked;
+}
+
+/// @nodoc
 class _$CategoryStateTearOff {
   const _$CategoryStateTearOff();
 
@@ -289,12 +395,14 @@ class _$CategoryStateTearOff {
       {required List<Category> categories,
       required bool isLoading,
       required bool hasInternetConnection,
-      required bool hasError}) {
+      required bool hasError,
+      required bool isRetryButtonClicked}) {
     return Initial(
       categories: categories,
       isLoading: isLoading,
       hasInternetConnection: hasInternetConnection,
       hasError: hasError,
+      isRetryButtonClicked: isRetryButtonClicked,
     );
   }
 }
@@ -308,18 +416,27 @@ mixin _$CategoryState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasInternetConnection => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
+  bool get isRetryButtonClicked => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Category> categories, bool isLoading,
-            bool hasInternetConnection, bool hasError)
+    required TResult Function(
+            List<Category> categories,
+            bool isLoading,
+            bool hasInternetConnection,
+            bool hasError,
+            bool isRetryButtonClicked)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Category> categories, bool isLoading,
-            bool hasInternetConnection, bool hasError)?
+    TResult Function(
+            List<Category> categories,
+            bool isLoading,
+            bool hasInternetConnection,
+            bool hasError,
+            bool isRetryButtonClicked)?
         initial,
     required TResult orElse(),
   }) =>
@@ -350,7 +467,8 @@ abstract class $CategoryStateCopyWith<$Res> {
       {List<Category> categories,
       bool isLoading,
       bool hasInternetConnection,
-      bool hasError});
+      bool hasError,
+      bool isRetryButtonClicked});
 }
 
 /// @nodoc
@@ -368,6 +486,7 @@ class _$CategoryStateCopyWithImpl<$Res>
     Object? isLoading = freezed,
     Object? hasInternetConnection = freezed,
     Object? hasError = freezed,
+    Object? isRetryButtonClicked = freezed,
   }) {
     return _then(_value.copyWith(
       categories: categories == freezed
@@ -386,6 +505,10 @@ class _$CategoryStateCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      isRetryButtonClicked: isRetryButtonClicked == freezed
+          ? _value.isRetryButtonClicked
+          : isRetryButtonClicked // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -399,7 +522,8 @@ abstract class $InitialCopyWith<$Res> implements $CategoryStateCopyWith<$Res> {
       {List<Category> categories,
       bool isLoading,
       bool hasInternetConnection,
-      bool hasError});
+      bool hasError,
+      bool isRetryButtonClicked});
 }
 
 /// @nodoc
@@ -417,6 +541,7 @@ class _$InitialCopyWithImpl<$Res> extends _$CategoryStateCopyWithImpl<$Res>
     Object? isLoading = freezed,
     Object? hasInternetConnection = freezed,
     Object? hasError = freezed,
+    Object? isRetryButtonClicked = freezed,
   }) {
     return _then(Initial(
       categories: categories == freezed
@@ -435,6 +560,10 @@ class _$InitialCopyWithImpl<$Res> extends _$CategoryStateCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      isRetryButtonClicked: isRetryButtonClicked == freezed
+          ? _value.isRetryButtonClicked
+          : isRetryButtonClicked // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -446,7 +575,8 @@ class _$Initial implements Initial {
       {required this.categories,
       required this.isLoading,
       required this.hasInternetConnection,
-      required this.hasError});
+      required this.hasError,
+      required this.isRetryButtonClicked});
 
   @override
   final List<Category> categories;
@@ -456,10 +586,12 @@ class _$Initial implements Initial {
   final bool hasInternetConnection;
   @override
   final bool hasError;
+  @override
+  final bool isRetryButtonClicked;
 
   @override
   String toString() {
-    return 'CategoryState.initial(categories: $categories, isLoading: $isLoading, hasInternetConnection: $hasInternetConnection, hasError: $hasError)';
+    return 'CategoryState.initial(categories: $categories, isLoading: $isLoading, hasInternetConnection: $hasInternetConnection, hasError: $hasError, isRetryButtonClicked: $isRetryButtonClicked)';
   }
 
   @override
@@ -477,7 +609,10 @@ class _$Initial implements Initial {
                     other.hasInternetConnection, hasInternetConnection)) &&
             (identical(other.hasError, hasError) ||
                 const DeepCollectionEquality()
-                    .equals(other.hasError, hasError)));
+                    .equals(other.hasError, hasError)) &&
+            (identical(other.isRetryButtonClicked, isRetryButtonClicked) ||
+                const DeepCollectionEquality()
+                    .equals(other.isRetryButtonClicked, isRetryButtonClicked)));
   }
 
   @override
@@ -486,7 +621,8 @@ class _$Initial implements Initial {
       const DeepCollectionEquality().hash(categories) ^
       const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(hasInternetConnection) ^
-      const DeepCollectionEquality().hash(hasError);
+      const DeepCollectionEquality().hash(hasError) ^
+      const DeepCollectionEquality().hash(isRetryButtonClicked);
 
   @JsonKey(ignore: true)
   @override
@@ -496,23 +632,33 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Category> categories, bool isLoading,
-            bool hasInternetConnection, bool hasError)
+    required TResult Function(
+            List<Category> categories,
+            bool isLoading,
+            bool hasInternetConnection,
+            bool hasError,
+            bool isRetryButtonClicked)
         initial,
   }) {
-    return initial(categories, isLoading, hasInternetConnection, hasError);
+    return initial(categories, isLoading, hasInternetConnection, hasError,
+        isRetryButtonClicked);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Category> categories, bool isLoading,
-            bool hasInternetConnection, bool hasError)?
+    TResult Function(
+            List<Category> categories,
+            bool isLoading,
+            bool hasInternetConnection,
+            bool hasError,
+            bool isRetryButtonClicked)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(categories, isLoading, hasInternetConnection, hasError);
+      return initial(categories, isLoading, hasInternetConnection, hasError,
+          isRetryButtonClicked);
     }
     return orElse();
   }
@@ -543,7 +689,8 @@ abstract class Initial implements CategoryState {
       {required List<Category> categories,
       required bool isLoading,
       required bool hasInternetConnection,
-      required bool hasError}) = _$Initial;
+      required bool hasError,
+      required bool isRetryButtonClicked}) = _$Initial;
 
   @override
   List<Category> get categories => throw _privateConstructorUsedError;
@@ -553,6 +700,8 @@ abstract class Initial implements CategoryState {
   bool get hasInternetConnection => throw _privateConstructorUsedError;
   @override
   bool get hasError => throw _privateConstructorUsedError;
+  @override
+  bool get isRetryButtonClicked => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $InitialCopyWith<Initial> get copyWith => throw _privateConstructorUsedError;

@@ -24,6 +24,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
             isLoading: true,
             hasInternetConnection: true,
             hasError: true,
+            isRetryButtonClicked: false,
           ),
         ) {
     listenOnNetworkStatus();
@@ -34,6 +35,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     _networkChecker.onNetworkStatusChange.listen((status) {
       if (status == ConnectionStatus.disconnected ||
           status == ConnectionStatus.connected) {
+        if (status == ConnectionStatus.connected) {
+          getCategories();
+        }
         this.add(
           CategoryEvent.networkStatusChanged(status),
         );
@@ -52,6 +56,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     yield* event.map(
       reloadCategories: _reloadCategories,
       networkStatusChanged: _networkStatusChanged,
+      retryButtonClicked: _retryButtonClicked,
     );
   }
 
@@ -81,13 +86,32 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   CategoryState _showFailure(CategoryState state, {required Failure failure}) {
-    return state;
+    return state.copyWith(
+      isLoading: false,
+      hasError: true,
+      isRetryButtonClicked: false,
+    );
   }
 
   CategoryState _showCategories(List<Category> categories) {
     return state.copyWith(
       isLoading: false,
+      isRetryButtonClicked: false,
       categories: categories,
+    );
+  }
+
+  Stream<CategoryState> _retryButtonClicked(RetryButtonClicked value) async* {
+    yield state.copyWith(
+      isRetryButtonClicked: true,
+      hasError: false,
+    );
+    // Animation purpose
+    await Future.delayed(const Duration(seconds: 2));
+    final categoriesOrFailure = await _categoryService.getAllCategories();
+    yield categoriesOrFailure.fold<CategoryState>(
+      (l) => _showFailure(state, failure: l),
+      (r) => _showCategories(r),
     );
   }
 }

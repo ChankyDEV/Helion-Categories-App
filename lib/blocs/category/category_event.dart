@@ -6,4 +6,7 @@ class CategoryEvent with _$CategoryEvent {
 
   const factory CategoryEvent.networkStatusChanged(ConnectionStatus status) =
       NetworkStatusChanged;
+
+  const factory CategoryEvent.retryButtonClicked() =
+  RetryButtonClicked;
 }

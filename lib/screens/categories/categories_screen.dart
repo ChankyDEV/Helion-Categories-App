@@ -15,8 +15,45 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return SafeArea(
-      child: BlocBuilder<CategoryBloc, CategoryState>(
+      child: BlocConsumer<CategoryBloc, CategoryState>(
+        listenWhen: (previous, current) =>
+            previous.hasError == false && current.hasError == true,
+        listener: (context, state) {
+          if (state.hasError == true) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.white60,
+                behavior: SnackBarBehavior.fixed,
+                content: Container(
+                  alignment: Alignment.center,
+                  width: width * 0.70,
+                  height: height * 0.08,
+                  child: Text(
+                    'Wystąpił problem podczas pobierania danych',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColorLight,
+                    border: Border.all(
+                        color: Theme.of(context).primaryColor, width: 2.0),
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                ),
+                elevation: 0.0,
+                duration: Duration(milliseconds: 3500),
+              ),
+            );
+            // BlocProvider.of<CategoryBloc>(context)
+            //     .add(CategoryEvent.resetErrors());
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -24,10 +61,10 @@ class Categories extends StatelessWidget {
                 state.isLoading
                     ? const SizedBox()
                     : state.hasInternetConnection
-                    ? IconButton(
-                    onPressed: () => reloadCategories(context),
-                    icon: Icon(Icons.download_rounded))
-                    : const SizedBox()
+                        ? IconButton(
+                            onPressed: () => reloadCategories(context),
+                            icon: Icon(Icons.download_rounded))
+                        : const SizedBox()
               ],
               title: Text(
                 AppLocalizations.of(context)!.categoriesHeader,
@@ -37,11 +74,11 @@ class Categories extends StatelessWidget {
             body: state.isLoading
                 ? _showLoadingIndicator()
                 : state.hasInternetConnection
-                ? _showCategories(state, context)
-                : _showNoInternetConnection(
-              context,
-              state,
-            ),
+                    ? _showCategories(state, context)
+                    : _showNoInternetConnection(
+                        context,
+                        state,
+                      ),
           );
         },
       ),
@@ -56,8 +93,10 @@ class Categories extends StatelessWidget {
     );
   }
 
-  Widget _showCategories(CategoryState state,
-      BuildContext context,) {
+  Widget _showCategories(
+    CategoryState state,
+    BuildContext context,
+  ) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -74,8 +113,10 @@ class Categories extends StatelessWidget {
     );
   }
 
-  Widget _showNoInternetConnection(BuildContext context,
-      CategoryState state,) {
+  Widget _showNoInternetConnection(
+    BuildContext context,
+    CategoryState state,
+  ) {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,17 +151,13 @@ class Categories extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryTile(int index,
-      Category category,
-      BuildContext context,) {
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
+  Widget _buildCategoryTile(
+    int index,
+    Category category,
+    BuildContext context,
+  ) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Card(
       child: Stack(
         children: [
@@ -136,9 +173,7 @@ class Categories extends StatelessWidget {
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
+                    color: Theme.of(context).primaryColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -159,13 +194,13 @@ class Categories extends StatelessWidget {
             subtitle: category.hasSubcategories
                 ? null
                 : Text(
-              AppLocalizations.of(context)!
-                  .categoryWithoutSubcategoriesLabel,
-              style: TextStyle(
-                fontSize: 11.0,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
+                    AppLocalizations.of(context)!
+                        .categoryWithoutSubcategoriesLabel,
+                    style: TextStyle(
+                      fontSize: 11.0,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
             children: [...listSubcategories(category.subcategories, context)],
           ),
           GestureDetector(
@@ -174,19 +209,20 @@ class Categories extends StatelessWidget {
               height: height * 0.08,
               color: Colors.transparent,
             ),
-            onTap: () =>
-                Utils.showCategoryInfoDialog(
-                  context,
-                  category,
-                ),
+            onTap: () => Utils.showCategoryInfoDialog(
+              context,
+              category,
+            ),
           ),
         ],
       ),
     );
   }
 
-  List<Widget> listSubcategories(List<Category> subcategories,
-      BuildContext context,) {
+  List<Widget> listSubcategories(
+    List<Category> subcategories,
+    BuildContext context,
+  ) {
     final subcategoriesTiles = <Widget>[];
     subcategoriesTiles.add(
       Container(
@@ -210,11 +246,10 @@ class Categories extends StatelessWidget {
                 Utils.strip(context, scale: 0.15),
               ],
             ),
-            onTap: () =>
-                Utils.showCategoryInfoDialog(
-                  context,
-                  subcategory,
-                ),
+            onTap: () => Utils.showCategoryInfoDialog(
+              context,
+              subcategory,
+            ),
           ),
         ),
       );
@@ -222,17 +257,17 @@ class Categories extends StatelessWidget {
     return subcategoriesTiles;
   }
 
-  Widget _buildRetryButton(BuildContext context,
-      CategoryState state,) {
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
+  Widget _buildRetryButton(
+    BuildContext context,
+    CategoryState state,
+  ) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return GestureDetector(
+      onTap: state.isRetryButtonClicked
+          ? () {}
+          : () => BlocProvider.of<CategoryBloc>(context)
+              .add(CategoryEvent.retryButtonClicked()),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         alignment: Alignment.center,
@@ -241,16 +276,20 @@ class Categories extends StatelessWidget {
         child: Text(
           'Ponów'.toUpperCase(),
           style: TextStyle(
-            color: Theme
-                .of(context)
-                .primaryColorLight,
+            color: state.isRetryButtonClicked
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).primaryColorLight,
             fontSize: 16.0,
           ),
         ),
         decoration: BoxDecoration(
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: state.isRetryButtonClicked
+              ? Theme.of(context).primaryColorLight
+              : Theme.of(context).primaryColor,
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+            width: state.isRetryButtonClicked ? 2.0 : 0.0,
+          ),
           borderRadius: BorderRadius.circular(6.0),
         ),
       ),
