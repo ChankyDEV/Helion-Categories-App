@@ -6,7 +6,7 @@ class MockCategoryRepository extends Mock implements CategoryRepository {
   @override
   Future<List<CategoryDTO>> getAllCategories() async {
     return super.noSuchMethod(
-      Invocation.method(#getUser, null),
+      Invocation.method(#getAllCategories, null),
       returnValueForMissingStub: Future.value(<CategoryDTO>[]),
       returnValue: Future.value(<CategoryDTO>[]),
     );
