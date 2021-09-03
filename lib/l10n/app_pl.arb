@@ -1,9 +1,12 @@
 {
-    "title" : "Aplikacja Helion",
-    "categoriesHeader": "Dostępne kategorie",
-    "categoryNameLabel": "Kategoria",
-    "categoryIDLabel": "Identyfikator",
-    "categoryBooksAmountLabel": "Ilość książek",
-    "categoryWithoutSubcategoriesLabel": "Brak podkategorii",
-    "noInternetConnectionLabel": "Niestety nie masz połączenia z internetem"
+  "title": "Aplikacja Helion",
+  "categoriesHeader": "Dostępne kategorie",
+  "categoryNameLabel": "Kategoria",
+  "categoryIDLabel": "Identyfikator",
+  "categoryBooksAmountLabel": "Ilość książek",
+  "categoryWithoutSubcategoriesLabel": "Brak podkategorii",
+  "noInternetConnectionLabel": "Niestety nie masz połączenia z internetem",
+  "errorMessage": "Wystąpił błąd podczas pobierania danych",
+  "retry": "Ponów",
+  "loading": "Ładowanie"
 }

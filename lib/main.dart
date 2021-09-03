@@ -6,8 +6,7 @@ import 'package:helion/config.dart';
 import 'package:helion/services/routing/routing_service.dart';
 
 void main() async {
-  final config = Config();
-  await config.configureDependencies();
+  Config()..configureDependencies();
   runApp(MyApp());
 }
 
@@ -32,6 +31,7 @@ class MyApp extends StatelessWidget {
       },
       onGenerateRoute: routing.routes,
       theme: ThemeData(
+        primaryColor: Colors.brown,
         primarySwatch: Colors.brown,
         accentColor: Colors.blue,
         primaryColorLight: Colors.white,

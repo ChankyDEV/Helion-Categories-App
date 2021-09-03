@@ -1,8 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:helion/models/category.dart';
+import 'package:helion/screens/styles.dart';
 
 class Utils {
+  static SnackBar snackBar(
+    BuildContext context, {
+    required String errorMessage,
+    double widthPercentage = 0.8,
+    double heightPercentage = 0.08,
+    Duration duration = const Duration(milliseconds: 3500),
+  }) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return SnackBar(
+      backgroundColor: Colors.white60,
+      behavior: SnackBarBehavior.fixed,
+      content: Container(
+        alignment: Alignment.center,
+        width: width * widthPercentage,
+        height: height * heightPercentage,
+        child: Text(
+          errorMessage,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontSize: 16.0,
+          ),
+        ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColorLight,
+          border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
+      elevation: 0.0,
+      duration: duration,
+    );
+  }
+
   static void showCategoryInfoDialog(
     BuildContext context,
     Category category,
@@ -48,7 +84,9 @@ class Utils {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: strip(context, scale: 0.2)),
+        Expanded(
+          child: strip(context, scale: 0.2),
+        ),
         Expanded(
             flex: 5,
             child: Padding(
@@ -56,7 +94,10 @@ class Utils {
                 horizontal: 12.0,
                 vertical: 0.0,
               ),
-              child: _content(category, context),
+              child: _content(
+                category,
+                context,
+              ),
             )),
       ],
     );
@@ -67,17 +108,21 @@ class Utils {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-            child: textField(category.id.toString(),
-                AppLocalizations.of(context)!.categoryIDLabel)),
+          child: textWithDescription(context,
+              value: category.id.toString(),
+              description: AppLocalizations.of(context)!.categoryIDLabel),
+        ),
         Expanded(
-            child: textField(
-          category.name,
-          AppLocalizations.of(context)!.categoryNameLabel,
+            child: textWithDescription(
+          context,
+          value: category.name,
+          description: AppLocalizations.of(context)!.categoryNameLabel,
         )),
         Expanded(
-            child: textField(
-          category.booksAmount,
-          AppLocalizations.of(context)!.categoryBooksAmountLabel,
+            child: textWithDescription(
+          context,
+          value: category.booksAmount,
+          description: AppLocalizations.of(context)!.categoryBooksAmountLabel,
         )),
       ],
     );
@@ -103,25 +148,24 @@ class Utils {
     );
   }
 
-  static Widget textField(
-    String value,
-    String description,
-  ) {
+  static Widget textWithDescription(
+    BuildContext context, {
+    required String value,
+    required String description,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           description.toUpperCase(),
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 12.0,
-          ),
+          style: Styles.general.descriptionLabelBold,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
           value,
+          style: Styles.general.body,
         )
       ],
     );

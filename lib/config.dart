@@ -13,9 +13,14 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 class Config {
   final GetIt getIt = GetIt.instance;
 
-  Future<void> configureDependencies() async {
+  void configureDependencies() {
+    _registerDataSources();
+    _registerServices();
+    _registerBlocs();
+  }
+
+  void _registerDataSources() {
     getIt
-      ..registerSingleton<RoutingService>(RoutingService())
       ..registerSingleton<CategoryRepository>(
         CategoryRepositoryImpl(
           http.Client(),
@@ -25,13 +30,22 @@ class Config {
         NetworkConnectionCheckerImpl(
           InternetConnectionChecker(),
         ),
-      )
+      );
+  }
+
+  void _registerServices() {
+    getIt
+      ..registerSingleton<RoutingService>(RoutingService())
       ..registerSingleton<CategoryService>(
         CategoryServiceImpl(
           getIt.get<CategoryRepository>(),
           getIt.get<NetworkConnectionChecker>(),
         ),
-      )
+      );
+  }
+
+  void _registerBlocs() {
+    getIt
       ..registerSingleton<CategoryBloc>(
         CategoryBloc(
           getIt.get<CategoryService>(),

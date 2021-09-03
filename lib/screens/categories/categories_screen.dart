@@ -3,20 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:helion/blocs/category/category_bloc.dart';
 import 'package:helion/models/category.dart';
+import 'package:helion/screens/core/loading_screen.dart';
+import 'package:helion/screens/images.dart';
+import 'package:helion/screens/styles.dart';
 import 'package:helion/screens/utils.dart';
 
 class Categories extends StatelessWidget {
   const Categories({Key? key}) : super(key: key);
 
-  void reloadCategories(BuildContext context) {
-    BlocProvider.of<CategoryBloc>(context)
-        .add(CategoryEvent.reloadCategories());
-  }
+  void reloadCategories(BuildContext context) =>
+      BlocProvider.of<CategoryBloc>(context).add(
+        CategoryEvent.reloadCategories(),
+      );
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: BlocConsumer<CategoryBloc, CategoryState>(
         listenWhen: (previous, current) =>
@@ -24,71 +25,40 @@ class Categories extends StatelessWidget {
         listener: (context, state) {
           if (state.hasError == true) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Colors.white60,
-                behavior: SnackBarBehavior.fixed,
-                content: Container(
-                  alignment: Alignment.center,
-                  width: width * 0.70,
-                  height: height * 0.08,
-                  child: Text(
-                    'Wystąpił problem podczas pobierania danych',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColorLight,
-                    border: Border.all(
-                        color: Theme.of(context).primaryColor, width: 2.0),
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                ),
-                elevation: 0.0,
-                duration: Duration(milliseconds: 3500),
+              Utils.snackBar(
+                context,
+                errorMessage: AppLocalizations.of(context)!.errorMessage,
               ),
             );
-            // BlocProvider.of<CategoryBloc>(context)
-            //     .add(CategoryEvent.resetErrors());
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              actions: [
-                state.isLoading
-                    ? const SizedBox()
-                    : state.hasInternetConnection
-                        ? IconButton(
-                            onPressed: () => reloadCategories(context),
-                            icon: Icon(Icons.download_rounded))
-                        : const SizedBox()
-              ],
-              title: Text(
-                AppLocalizations.of(context)!.categoriesHeader,
-              ),
-              centerTitle: true,
-            ),
-            body: state.isLoading
-                ? _showLoadingIndicator()
-                : state.hasInternetConnection
-                    ? _showCategories(state, context)
-                    : _showNoInternetConnection(
-                        context,
-                        state,
-                      ),
-          );
+          return state.isLoading
+              ? _showLoadingIndicator()
+              : Scaffold(
+                  appBar: AppBar(
+                    actions: [
+                      state.isLoading
+                          ? const SizedBox()
+                          : state.hasInternetConnection
+                              ? IconButton(
+                                  onPressed: () => reloadCategories(context),
+                                  icon: Icon(Icons.download_rounded))
+                              : const SizedBox()
+                    ],
+                    title: Text(
+                      AppLocalizations.of(context)!.categoriesHeader,
+                    ),
+                    centerTitle: true,
+                  ),
+                  body: state.hasInternetConnection
+                      ? _showCategories(state, context)
+                      : _showNoInternetConnection(
+                          context,
+                          state,
+                        ),
+                );
         },
-      ),
-    );
-  }
-
-  Widget _showLoadingIndicator() {
-    return Center(
-      child: CircularProgressIndicator(
-        color: Colors.black,
       ),
     );
   }
@@ -110,44 +80,6 @@ class Categories extends StatelessWidget {
           context,
         );
       },
-    );
-  }
-
-  Widget _showNoInternetConnection(
-    BuildContext context,
-    CategoryState state,
-  ) {
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 6,
-            child: Image.asset('assets/images/no_internet_img.png'),
-          ),
-          Expanded(
-              flex: 4,
-              child: Column(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.noInternetConnectionLabel,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  _buildRetryButton(
-                    context,
-                    state,
-                  ),
-                ],
-              )),
-        ],
-      ),
     );
   }
 
@@ -187,6 +119,7 @@ class Categories extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
+                    style: Styles.general.body,
                   ),
                 ),
               ],
@@ -196,10 +129,7 @@ class Categories extends StatelessWidget {
                 : Text(
                     AppLocalizations.of(context)!
                         .categoryWithoutSubcategoriesLabel,
-                    style: TextStyle(
-                      fontSize: 11.0,
-                      fontStyle: FontStyle.italic,
-                    ),
+                    style: Styles.general.sideNote,
                   ),
             children: [...listSubcategories(category.subcategories, context)],
           ),
@@ -239,11 +169,17 @@ class Categories extends StatelessWidget {
           child: ListTile(
             title: Column(
               children: [
-                Text(subcategory.name),
+                Text(
+                  subcategory.name,
+                  style: Styles.general.body,
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                Utils.strip(context, scale: 0.15),
+                Utils.strip(
+                  context,
+                  scale: 0.15,
+                ),
               ],
             ),
             onTap: () => Utils.showCategoryInfoDialog(
@@ -255,6 +191,46 @@ class Categories extends StatelessWidget {
       );
     });
     return subcategoriesTiles;
+  }
+
+  Widget _showNoInternetConnection(
+    BuildContext context,
+    CategoryState state,
+  ) {
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 6,
+            child: Images.general.noInternetImage,
+          ),
+          Expanded(
+              flex: 4,
+              child: Column(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.noInternetConnectionLabel,
+                    textAlign: TextAlign.center,
+                    style: Styles.general.headerSmall,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  _buildRetryButton(
+                    context,
+                    state,
+                  ),
+                ],
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget _showLoadingIndicator() {
+    return LoadingScreen();
   }
 
   Widget _buildRetryButton(
@@ -274,12 +250,11 @@ class Categories extends StatelessWidget {
         width: width * 0.4,
         height: height * 0.065,
         child: Text(
-          'Ponów'.toUpperCase(),
-          style: TextStyle(
+          AppLocalizations.of(context)!.retry.toUpperCase(),
+          style: Styles.general.button.copyWith(
             color: state.isRetryButtonClicked
                 ? Theme.of(context).primaryColor
                 : Theme.of(context).primaryColorLight,
-            fontSize: 16.0,
           ),
         ),
         decoration: BoxDecoration(
