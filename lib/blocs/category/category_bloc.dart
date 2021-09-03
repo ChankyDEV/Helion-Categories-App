@@ -62,11 +62,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   Stream<CategoryState> _reloadCategories(ReloadCategories value) async* {
     yield state.copyWith(isLoading: true);
-    final categoriesOrFailure = await _categoryService.getAllCategories();
-    yield categoriesOrFailure.fold<CategoryState>(
-      (l) => _showFailure(state, failure: l),
-      (r) => _showCategories(r),
-    );
+    yield await _getStateFromCategoriesRequest(state);
   }
 
   Stream<CategoryState> _networkStatusChanged(
@@ -106,10 +102,15 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       isRetryButtonClicked: true,
       hasError: false,
     );
-    // Animation purpose
+    // For animation purpose. Normally it will be deleted
     await Future.delayed(const Duration(seconds: 2));
+    yield await _getStateFromCategoriesRequest(state);
+  }
+
+  Future<CategoryState> _getStateFromCategoriesRequest(
+      CategoryState state) async {
     final categoriesOrFailure = await _categoryService.getAllCategories();
-    yield categoriesOrFailure.fold<CategoryState>(
+    return categoriesOrFailure.fold<CategoryState>(
       (l) => _showFailure(state, failure: l),
       (r) => _showCategories(r),
     );
