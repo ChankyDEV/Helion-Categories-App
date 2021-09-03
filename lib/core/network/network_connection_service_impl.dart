@@ -12,8 +12,9 @@ class NetworkConnectionCheckerImpl implements NetworkConnectionChecker {
 
   @override
   Stream<ConnectionStatus> get onNetworkStatusChange =>
-      _internetConnectionChecker.onStatusChange
-          .map((status) => networkStatusConverter(status));
+      _internetConnectionChecker.onStatusChange.map(
+        (status) => networkStatusConverter(status),
+      );
 
   @visibleForTesting
   ConnectionStatus networkStatusConverter(InternetConnectionStatus status) {

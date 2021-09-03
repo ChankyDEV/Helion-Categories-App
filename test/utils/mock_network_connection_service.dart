@@ -20,4 +20,12 @@ class MockInternetConnectionChecker extends Mock
         returnValue: Future.value(true),
         returnValueForMissingStub: Future.value(true),
       );
+
+  @override
+  Stream<InternetConnectionStatus> get onStatusChange => super.noSuchMethod(
+        Invocation.getter(#onStatusChange),
+        returnValue: Stream.value(InternetConnectionStatus.connected),
+        returnValueForMissingStub:
+            Stream.value(InternetConnectionStatus.connected),
+      );
 }
