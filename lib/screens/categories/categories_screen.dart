@@ -55,8 +55,7 @@ class Categories extends StatelessWidget {
                   body: state.hasInternetConnection
                       ? state.categories.isEmpty
                           ? InfoScreenWithRetryButton(
-                              information:
-                                  'Nie mamy dla Ciebie żadnych kategorii',
+                              information: AppLocalizations.of(context)!.noData,
                               image: Images.general.noDataImage,
                               isRetryButtonClicked: state.isRetryButtonClicked,
                               onRetryButtonClick: () =>

@@ -38,5 +38,9 @@
   "loading": "Loading",
   "@loading": {
     "description": "Label that is shown while loading"
+  },
+  "noData": "We don't have any categories for you",
+  "@noData": {
+    "description": "Label that is shown while there is no data for user"
   }
 }

@@ -8,5 +8,6 @@
   "noInternetConnectionLabel": "Niestety nie masz połączenia z internetem",
   "errorMessage": "Wystąpił błąd podczas pobierania danych",
   "retry": "Ponów",
-  "loading": "Ładowanie"
+  "loading": "Ładowanie",
+  "noData": "Nie mamy dla Ciebie żadnych kategorii"
 }
