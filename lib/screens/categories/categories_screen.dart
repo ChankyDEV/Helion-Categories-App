@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:helion/blocs/category/category_bloc.dart';
 import 'package:helion/models/category.dart';
+import 'package:helion/screens/core/info_screen_with_retry_button.dart';
 import 'package:helion/screens/core/loading_screen.dart';
 import 'package:helion/screens/images.dart';
 import 'package:helion/screens/styles.dart';
@@ -52,10 +53,27 @@ class Categories extends StatelessWidget {
                     centerTitle: true,
                   ),
                   body: state.hasInternetConnection
-                      ? _showCategories(state, context)
-                      : _showNoInternetConnection(
-                          context,
-                          state,
+                      ? state.categories.isEmpty
+                          ? InfoScreenWithRetryButton(
+                              information:
+                                  'Nie mamy dla Ciebie żadnych kategorii',
+                              image: Images.general.noDataImage,
+                              isRetryButtonClicked: state.isRetryButtonClicked,
+                              onRetryButtonClick: () =>
+                                  BlocProvider.of<CategoryBloc>(context).add(
+                                CategoryEvent.retryButtonClicked(),
+                              ),
+                            )
+                          : _showCategories(state, context)
+                      : InfoScreenWithRetryButton(
+                          information: AppLocalizations.of(context)!
+                              .noInternetConnectionLabel,
+                          image: Images.general.noInternetImage,
+                          isRetryButtonClicked: state.isRetryButtonClicked,
+                          onRetryButtonClick: () =>
+                              BlocProvider.of<CategoryBloc>(context).add(
+                            CategoryEvent.retryButtonClicked(),
+                          ),
                         ),
                 );
         },
@@ -131,7 +149,7 @@ class Categories extends StatelessWidget {
                         .categoryWithoutSubcategoriesLabel,
                     style: Styles.general.sideNote,
                   ),
-            children: [...listSubcategories(category.subcategories, context)],
+            children: [...subcategoriesList(category.subcategories, context)],
           ),
           GestureDetector(
             child: Container(
@@ -149,7 +167,7 @@ class Categories extends StatelessWidget {
     );
   }
 
-  List<Widget> listSubcategories(
+  List<Widget> subcategoriesList(
     List<Category> subcategories,
     BuildContext context,
   ) {
@@ -193,81 +211,7 @@ class Categories extends StatelessWidget {
     return subcategoriesTiles;
   }
 
-  Widget _showNoInternetConnection(
-    BuildContext context,
-    CategoryState state,
-  ) {
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 6,
-            child: Images.general.noInternetImage,
-          ),
-          Expanded(
-              flex: 4,
-              child: Column(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.noInternetConnectionLabel,
-                    textAlign: TextAlign.center,
-                    style: Styles.general.headerSmall,
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  _buildRetryButton(
-                    context,
-                    state,
-                  ),
-                ],
-              )),
-        ],
-      ),
-    );
-  }
-
   Widget _showLoadingIndicator() {
     return LoadingScreen();
-  }
-
-  Widget _buildRetryButton(
-    BuildContext context,
-    CategoryState state,
-  ) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-    return GestureDetector(
-      onTap: state.isRetryButtonClicked
-          ? () {}
-          : () => BlocProvider.of<CategoryBloc>(context)
-              .add(CategoryEvent.retryButtonClicked()),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
-        alignment: Alignment.center,
-        width: width * 0.4,
-        height: height * 0.065,
-        child: Text(
-          AppLocalizations.of(context)!.retry.toUpperCase(),
-          style: Styles.general.button.copyWith(
-            color: state.isRetryButtonClicked
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).primaryColorLight,
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: state.isRetryButtonClicked
-              ? Theme.of(context).primaryColorLight
-              : Theme.of(context).primaryColor,
-          border: Border.all(
-            color: Theme.of(context).primaryColor,
-            width: state.isRetryButtonClicked ? 2.0 : 0.0,
-          ),
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-      ),
-    );
   }
 }

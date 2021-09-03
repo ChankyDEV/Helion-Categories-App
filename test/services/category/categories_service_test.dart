@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:helion/core/network/network_connection_service.dart';
 import 'package:helion/models/category_dto.dart';
-import 'package:helion/models/category_exception.dart';
+import 'package:helion/models/exceptions.dart';
 import 'package:helion/models/failures.dart';
 import 'package:helion/repositories/category/category_repository.dart';
 import 'package:helion/services/category/category_service.dart';
 import 'package:helion/services/category/category_service_impl.dart';
-import 'package:helion/core/network/network_connection_service.dart';
 import 'package:helion/utils/consts.dart';
 import 'package:mockito/mockito.dart';
 
@@ -37,60 +37,62 @@ void main() {
   ];
   final errMessage = 'Error occured while getting categories';
 
-  test('should return all categories if getting them went successfully',
-      () async {
-    when(repository.getAllCategories()).thenAnswer(
-      (_) async => tCategories,
-    );
-    final categories = await categoriesService.getAllCategories();
-    verify(repository.getAllCategories());
-    expect(
-      categories,
-      right(tCategories),
-    );
-  });
+  group('getAllCategories', () {
+    test('should return all categories if getting them went successfully',
+        () async {
+      when(repository.getAllCategories()).thenAnswer(
+        (_) async => tCategories,
+      );
+      final categories = await categoriesService.getAllCategories();
+      verify(repository.getAllCategories());
+      expect(
+        categories,
+        right(tCategories),
+      );
+    });
 
-  test('should return failure if getting categories went unsuccessfully',
-      () async {
-    when(repository.getAllCategories()).thenThrow(
-      CategoryException(errMessage),
-    );
-    final categories = await categoriesService.getAllCategories();
+    test('should return failure if getting categories went unsuccessfully',
+        () async {
+      when(repository.getAllCategories()).thenThrow(
+        CategoryException(errMessage),
+      );
+      final categories = await categoriesService.getAllCategories();
 
-    verify(repository.getAllCategories());
-    expect(
-      categories,
-      left(Failure(errMessage)),
-    );
-  });
+      verify(repository.getAllCategories());
+      expect(
+        categories,
+        left(Failure(errMessage)),
+      );
+    });
 
-  test('should return all categories if there is internet connection',
-      () async {
-    when(networkConnectionService.isConnected).thenAnswer(
-      (_) async => true,
-    );
-    when(repository.getAllCategories()).thenAnswer(
-      (_) async => tCategories,
-    );
-    final categories = await categoriesService.getAllCategories();
-    verify(repository.getAllCategories());
-    verify(networkConnectionService.isConnected);
-    expect(
-      categories,
-      right(tCategories),
-    );
-  });
+    test('should return all categories if there is internet connection',
+        () async {
+      when(networkConnectionService.isConnected).thenAnswer(
+        (_) async => true,
+      );
+      when(repository.getAllCategories()).thenAnswer(
+        (_) async => tCategories,
+      );
+      final categories = await categoriesService.getAllCategories();
+      verify(repository.getAllCategories());
+      verify(networkConnectionService.isConnected);
+      expect(
+        categories,
+        right(tCategories),
+      );
+    });
 
-  test('should return failure if there is no internet connection', () async {
-    when(networkConnectionService.isConnected).thenAnswer(
-      (_) async => false,
-    );
-    final categories = await categoriesService.getAllCategories();
-    verifyNever(repository.getAllCategories());
-    verify(networkConnectionService.isConnected);
-    expect(
-      categories,
-      left(Failure(NO_INTERNET_CONNECTION)),
-    );
+    test('should return failure if there is no internet connection', () async {
+      when(networkConnectionService.isConnected).thenAnswer(
+        (_) async => false,
+      );
+      final categories = await categoriesService.getAllCategories();
+      verifyNever(repository.getAllCategories());
+      verify(networkConnectionService.isConnected);
+      expect(
+        categories,
+        left(Failure(NO_INTERNET_CONNECTION)),
+      );
+    });
   });
 }

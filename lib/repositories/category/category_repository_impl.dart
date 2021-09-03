@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:helion/models/category_dto.dart';
-import 'package:helion/models/category_exception.dart';
+import 'package:helion/models/exceptions.dart';
 import 'package:helion/repositories/category/category_repository.dart';
 import 'package:helion/utils/consts.dart';
 import 'package:http/http.dart' as http;

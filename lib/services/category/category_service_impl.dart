@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:helion/core/network/network_connection_service.dart';
 import 'package:helion/models/category.dart';
-import 'package:helion/models/category_exception.dart';
+import 'package:helion/models/exceptions.dart';
 import 'package:helion/models/failures.dart';
 import 'package:helion/repositories/category/category_repository.dart';
 import 'package:helion/services/category/category_service.dart';
-import 'package:helion/core/network/network_connection_service.dart';
 import 'package:helion/utils/consts.dart';
 
 class CategoryServiceImpl implements CategoryService {
@@ -24,9 +24,13 @@ class CategoryServiceImpl implements CategoryService {
         final categories = await _repository.getAllCategories();
         return right(categories);
       }
-      return left(Failure(NO_INTERNET_CONNECTION));
+      return left(
+        Failure(NO_INTERNET_CONNECTION),
+      );
     } on CategoryException catch (e) {
-      return left(Failure(e.message));
+      return left(
+        Failure(e.message),
+      );
     }
   }
 }

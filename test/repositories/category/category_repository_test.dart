@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:enough_convert/enough_convert.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:helion/models/category_dto.dart';
-import 'package:helion/models/category_exception.dart';
+import 'package:helion/models/exceptions.dart';
 import 'package:helion/repositories/category/category_repository.dart';
 import 'package:helion/repositories/category/category_repository_impl.dart';
 import 'package:helion/utils/consts.dart';
@@ -45,52 +44,55 @@ void main() {
     repository = CategoryRepositoryImpl(client);
   });
 
-  test('should perform a call to particular url', () async {
-    when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
-      (_) async =>
-          http.Response(fixture('categories.json'), 200, headers: headers),
-    );
-    await repository.getAllCategories();
-    verify(
-      client.get(
-        url,
-        headers: headers,
-      ),
-    );
-  });
+  group('getAllCategories', () {
+    test('should perform a call to particular url', () async {
+      when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
+        (_) async =>
+            http.Response(fixture('categories.json'), 200, headers: headers),
+      );
+      await repository.getAllCategories();
+      verify(
+        client.get(
+          url,
+          headers: headers,
+        ),
+      );
+    });
 
-  test('should return list of categories if status code is 200', () async {
-    when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
-      (_) async => http.Response(fixture('categories.json'), 200,
-          headers: headers),
-    );
+    test('should return list of categories if status code is 200', () async {
+      when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
+        (_) async =>
+            http.Response(fixture('categories.json'), 200, headers: headers),
+      );
 
-    final categories = await repository.getAllCategories();
+      final categories = await repository.getAllCategories();
 
-    verify(
-      client.get(
-        url,
-        headers: headers,
-      ),
-    );
-    expect(
-      categories,
-      tCategories,
-    );
-  });
+      verify(
+        client.get(
+          url,
+          headers: headers,
+        ),
+      );
+      expect(
+        categories,
+        tCategories,
+      );
+    });
 
-  test('should throw categories exception if status code is different than 200',
-      () async {
-    when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
-      (_) async => http.Response('', 400, headers: {
-        HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
-      }),
-    );
-    final call = repository.getAllCategories;
+    test(
+        'should throw categories exception if status code is different than 200',
+        () async {
+      when(client.get(url, headers: anyNamed('headers'))).thenAnswer(
+        (_) async => http.Response('', 400, headers: {
+          HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+        }),
+      );
+      final call = repository.getAllCategories;
 
-    expect(
-      () => call(),
-      throwsA(CategoryException(WRONG_STATUS_CODE)),
-    );
+      expect(
+        () => call(),
+        throwsA(CategoryException(WRONG_STATUS_CODE)),
+      );
+    });
   });
 }

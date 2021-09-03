@@ -128,6 +128,42 @@ class Utils {
     );
   }
 
+  static Widget buildButton(
+    BuildContext context, {
+    required bool isButtonClicked,
+    required VoidCallback onTap,
+  }) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return GestureDetector(
+      onTap: isButtonClicked ? () {} : onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        alignment: Alignment.center,
+        width: width * 0.4,
+        height: height * 0.065,
+        child: Text(
+          AppLocalizations.of(context)!.retry.toUpperCase(),
+          style: Styles.general.button.copyWith(
+            color: isButtonClicked
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).primaryColorLight,
+          ),
+        ),
+        decoration: BoxDecoration(
+          color: isButtonClicked
+              ? Theme.of(context).primaryColorLight
+              : Theme.of(context).primaryColor,
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+            width: isButtonClicked ? 2.0 : 0.0,
+          ),
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
+    );
+  }
+
   static Widget strip(
     BuildContext context, {
     scale,
